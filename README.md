@@ -58,5 +58,10 @@ pip install -r requirements.txt
 # 5. Compile & compress the model (PyTorch FP32 -> ONNX FP16)
 python export.py
 
-# 6. Fire up the live object tracking pipeline!
-python pipeline.py
+
+https://github.com/user-attachments/assets/9091258a-51c3-459b-80f4-77a9436ea879
+
+
+
+
+

@@ -1,13 +1,13 @@
-# Real-Time Multi-Object Tracking with Edge Optimization 🚀
+# Real-Time Multi-Object Tracking with Edge Optimization 
 
-### 📝 Problem Statement & Aim
+### Problem Statement & Aim
 Standard deep learning networks rely on heavy 32-bit floating-point weight parameters. When deployed on low-power, resource-constrained edge computing hardware (like drones, smartphones, or robotics platforms), these models cause severe latency issues and frame drops. 
 
 The aim of this project is to engineer a low-latency, real-time perception pipeline that assigns and maintains unique temporal identity tags for multiple targets across a live video stream, while actively quantizing the network matrix to maximize inference speed (FPS) without degrading target detection accuracy.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 * **Core Language:** Python 3.10
 * **Deep Learning Frameworks:** PyTorch (Stable 2.5.1 Layer), Ultralytics YOLOv8
@@ -17,7 +17,7 @@ The aim of this project is to engineer a low-latency, real-time perception pipel
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 * **Real-Time Edge Perception:** Utilizes a highly optimized YOLOv8 framework for microsecond object boundary box localization.
 * **Temporal Tracking Identity:** Integrated ByteTrack logic to persist object IDs across frames, eliminating short-term tracking memory loss.
@@ -26,7 +26,7 @@ The aim of this project is to engineer a low-latency, real-time perception pipel
 
 ---
 
-## 🧠 Core Process Pipeline
+## Core Process
 
 1. **Environment Sandbox Isolation:** Established an isolated Python virtual workspace with tightly locked version dependencies to guarantee production stability.
 2. **Stream Frame Matrix Ingestion:** Implemented a real-time OpenCV data loop to capture and decode live video arrays from the device hardware camera stream.
@@ -35,12 +35,27 @@ The aim of this project is to engineer a low-latency, real-time perception pipel
 
 ---
 
-## 🚀 Running the Project
-
-### 1. Initialize Your Environment
+##  Running the Project
+Follow these steps sequentially to configure your local workspace environment and initialize the dependencies:
 ```bash
-# Navigate to your workspace directory
+# 1. Clone the repository and enter the directory
+git clone [https://github.com/prasannasavalla/edge-object-tracking.git](https://github.com/prasannasavalla/edge-object-tracking.git)
 cd edge-object-tracking
 
-# Activate your isolated Python environment (Windows)
+# 2. Setup your isolated environment sandbox
+python -m venv venv
+
+# 3. Activate the environment (Run the command matching your OS)
+# Windows Command Prompt:
 venv\Scripts\activate.bat
+# Windows PowerShell:  .\venv\Scripts\activate.ps1
+# macOS / Linux:       source venv/bin/activate
+
+# 4. Install locked dependencies & requirements
+pip install -r requirements.txt
+
+# 5. Compile & Quantize weights (PyTorch FP32 -> ONNX FP16)
+python export.py
+
+# 6. Run the real-time tracking pipeline
+python pipeline.py

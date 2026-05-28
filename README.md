@@ -1,48 +1,49 @@
 # Real-Time Multi-Object Tracking with Edge Optimization 
 
-### Problem Statement & Aim
-Standard deep learning networks rely on heavy 32-bit floating-point weight parameters. When deployed on low-power, resource-constrained edge computing hardware (like drones, smartphones, or robotics platforms), these models cause severe latency issues and frame drops. 
+Standard deep learning models are heavy. Running them with full 32-bit floating-point weights on low-power edge devices (like webcams, drones, or smartphones) usually leads to terrible lag and massive frame drops. 
 
-The aim of this project is to engineer a low-latency, real-time perception pipeline that assigns and maintains unique temporal identity tags for multiple targets across a live video stream, while actively quantizing the network matrix to maximize inference speed (FPS) without degrading target detection accuracy.
+I built this project to fix that. The goal was to create a lightweight, real-time tracking pipeline that can spot multiple objects, remember their unique identities across video frames, and run smoothly on everyday hardware. By converting the core model into an optimized, half-precision (FP16) ONNX format, the system gets a major speed boost without losing accuracy.
 
 ---
 
-## Tech Stack
+## The Tech Stack
 
-* **Core Language:** Python 3.10
-* **Deep Learning Frameworks:** PyTorch (Stable 2.5.1 Layer), Ultralytics YOLOv8
-* **Inference Optimization:** ONNX Runtime
-* **Video & Array Processing:** OpenCV-Python, NumPy
+* **Language:** Python 3.10
+* **Deep Learning & Tracking:** PyTorch, Ultralytics YOLOv8, ByteTrack
+* **Optimization Engine:** ONNX Runtime
+* **Video & Image Handling:** OpenCV, NumPy
 * **Version Control:** Git
 
 ---
 
 ## Key Features
 
-* **Real-Time Edge Perception:** Utilizes a highly optimized YOLOv8 framework for microsecond object boundary box localization.
-* **Temporal Tracking Identity:** Integrated ByteTrack logic to persist object IDs across frames, eliminating short-term tracking memory loss.
-* **ONNX Half-Precision Quantization:** Compresses traditional neural math weights into an optimized FP16 execution matrix, accelerating FPS throughput.
-* **Deterministic Stability Control:** Configured with custom environment-level security exemptions to prevent execution crashes during model pickling steps.
+* **Fast Object Detection:** Uses a lightweight YOLOv8 network to pinpoint object locations in milliseconds.
+* **Smart ID Persistence:** Integrates the ByteTrack algorithm, meaning objects don't just get identified frame-by-frame—they get assigned a persistent tracking ID that follows them around the screen.
+* **Speed Optimization:** Quantizes heavy weights into a sleek FP16 matrix, making calculations much faster on standard CPUs.
+* **Crash Prevention:** Includes a custom security config layer to bypass PyTorch's strict unpickling filters, ensuring seamless setup out of the box.
 
 ---
 
-## Core Process
+## How the Pipeline Works
 
-1. **Environment Sandbox Isolation:** Established an isolated Python virtual workspace with tightly locked version dependencies to guarantee production stability.
-2. **Stream Frame Matrix Ingestion:** Implemented a real-time OpenCV data loop to capture and decode live video arrays from the device hardware camera stream.
-3. **Weight Quantization Compilation (`export.py`):** Wrote a compilation routine to process the PyTorch network graph, compressing it into a streamlined, high-speed `.onnx` configuration.
-4. **Tracking Identity Inference Loop (`pipeline.py`):** Passed the matrix objects to the ONNX Runtime execution block where coordinates are extracted, matched via overlapping areas, labeled with unique IDs, and rendered live.
+1. **Isolation:** I locked down the workspace inside a clean Python virtual environment to prevent package version conflicts.
+2. **Ingestion:** OpenCV handles the hardware camera loop, capturing and parsing incoming frames in real-time.
+3. **Quantization (`export.py`):** A custom compilation script strips down the heavy PyTorch layers and refactors them into high-speed `.onnx` weights.
+4. **Tracking Inference (`pipeline.py`):** The final stream runs on the ONNX Runtime engine, matching coordinates across frames, overlaying blue tracking boxes, and calculating live FPS metrics on the fly.
 
 ---
 
-##  Running the Project
-Follow these steps sequentially to configure your local workspace environment and initialize the dependencies:
+## Cloning, Running & Executing
+
+You can get this entire pipeline up and running on your local machine by copying and running this single terminal block:
+
 ```bash
-# 1. Clone the repository and enter the directory
+# 1. Clone the project and jump into the directory
 git clone [https://github.com/prasannasavalla/edge-object-tracking.git](https://github.com/prasannasavalla/edge-object-tracking.git)
 cd edge-object-tracking
 
-# 2. Setup your isolated environment sandbox
+# 2. Build your isolated Python sandbox environment
 python -m venv venv
 
 # 3. Activate the environment (Run the command matching your OS)
@@ -51,11 +52,11 @@ venv\Scripts\activate.bat
 # Windows PowerShell:  .\venv\Scripts\activate.ps1
 # macOS / Linux:       source venv/bin/activate
 
-# 4. Install locked dependencies & requirements
+# 4. Install all the necessary packages and locked dependencies
 pip install -r requirements.txt
 
-# 5. Compile & Quantize weights (PyTorch FP32 -> ONNX FP16)
+# 5. Compile & compress the model (PyTorch FP32 -> ONNX FP16)
 python export.py
 
-# 6. Run the real-time tracking pipeline
+# 6. Fire up the live object tracking pipeline!
 python pipeline.py

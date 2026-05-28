@@ -1,3 +1,7 @@
+
+
+https://github.com/user-attachments/assets/2de2d4b6-20a6-474f-9c85-1b990356cde2
+
 # Real-Time Multi-Object Tracking with Edge Optimization 
 
 Standard deep learning models are heavy. Running them with full 32-bit floating-point weights on low-power edge devices (like webcams, drones, or smartphones) usually leads to terrible lag and massive frame drops. 
@@ -58,8 +62,11 @@ pip install -r requirements.txt
 # 5. Compile & compress the model (PyTorch FP32 -> ONNX FP16)
 python export.py
 
+## 📹 Execution Demo
 
-https://github.com/user-attachments/assets/9091258a-51c3-459b-80f4-77a9436ea879
+<video src="YOUR_UPLOADED_VIDEO_URL" width="100%" controls autoplay loop muted></video>
+
+
 
 
 

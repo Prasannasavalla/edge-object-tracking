@@ -63,6 +63,8 @@ pip install -r requirements.txt
 python export.py
 
 ## 📹 Execution Demo
+https://github.com/user-attachments/assets/2de2d4b6-20a6-474f-9c85-1b990356cde2
+
 
 <video src="YOUR_UPLOADED_VIDEO_URL" width="100%" controls autoplay loop muted></video>
 
